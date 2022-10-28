@@ -12,3 +12,8 @@
 .item.done{
     @apply opacity-50 line-through
 }
+
+.button{
+    margin-right: 500px;
+    background-color: red;
+}

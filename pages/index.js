@@ -2,6 +2,9 @@ import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
 import cx from 'classnames';
 import styles from '../styles/Home.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDeleteLeft  } from '@fortawesome/free-solid-svg-icons'
+
 
 
 export default function Home() {
@@ -21,14 +24,17 @@ export default function Home() {
         message: todoItem,
         done:false
       },
-       
-        ...items,
-        
+        ...items, 
       ])
-      setTodoItem("")
-      
-    }
-   
+      setTodoItem("") 
+    } 
+  }
+
+  const DeleteItem=(id) =>{
+    const removeItem = items.filter((todoItem)=>{
+      return todoItem.id !== id
+    })
+    setItems(removeItem)
   }
 
   const handleEnter=(e)=> {
@@ -63,6 +69,7 @@ export default function Home() {
         value={todoItem} 
         onChange={(e)=> setTodoItem(e.target.value)}
         onKeyDown={handleEnter}/>
+        
         {/* <button type='button' onClick={handleAdd}>Add</button> */}
       </div>
 
@@ -73,9 +80,14 @@ export default function Home() {
           .map(({id,message})=> (
             <li 
             key={id} 
-            onClick={(e)=>handleToggle(id)} 
+            // onClick={(e)=>handleToggle(id)} 
+            
             className={cx(styles.item)}>
               {message}
+              <div 
+              className="flex flex-col">
+                <button onClick={(e)=> DeleteItem(id)} className='' styles={styles.button}><FontAwesomeIcon icon={faDeleteLeft} /></button>
+              </div>
               </li>
           ))
         }
@@ -86,7 +98,7 @@ export default function Home() {
           .map(({id,message})=> (
             <li 
             key={id} 
-            onClick={(e)=>handleToggle(id)} 
+            // onClick={(e)=>handleToggle(id)} 
             className={cx(styles.item, styles.done)}
             >
               {message}
